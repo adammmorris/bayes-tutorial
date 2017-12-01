@@ -9,7 +9,7 @@ probObsGivenInnocent = .2; % if he's NOT guilty, what's the probability that any
 % rule
 % numObs corresponds to 'R' in the task, and numPeopleInPark corresponds to
 % N
-getJoint = @(priorOfHypothesis, numObs, numPeopleInPark, probsObsGivenHypothesis) ...
+getNumerator = @(priorOfHypothesis, numObs, numPeopleInPark, probsObsGivenHypothesis) ...
     priorOfHypothesis * binopdf(numObs, numPeopleInPark, probsObsGivenHypothesis);
 
 % Returns the posterior probability that he's guilty,
@@ -17,8 +17,8 @@ getJoint = @(priorOfHypothesis, numObs, numPeopleInPark, probsObsGivenHypothesis
 % park
 % i.e. prob(guilty | numObs, numPeopleInPark)
 getPosterior = @(priorGuilty, numObs, numPeopleInPark) ...
-    getJoint(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) ./ ... % numerator of Bayes rule
-    (getJoint(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) + getJoint(1 - priorGuilty, numObs, numPeopleInPark, probObsGivenInnocent)); % denominator
+    getNumerator(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) ./ ... % numerator of Bayes rule
+    (getNumerator(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) + getNumerator(1 - priorGuilty, numObs, numPeopleInPark, probObsGivenInnocent)); % denominator
 
 %% Part A
 % Find the posterior for different numbers of sightings (given N = 7)
@@ -75,12 +75,12 @@ set(gca, 'FontSize', 36);
 probObsGivenGuilty = .4; % what if he's a master of disguise?
 
 % Recompute joint / posterior / marginal
-getJoint = @(priorOfHypothesis, numObs, numPeopleInPark, probsObsGivenHypothesis) ...
+getNumerator = @(priorOfHypothesis, numObs, numPeopleInPark, probsObsGivenHypothesis) ...
     priorOfHypothesis * binopdf(numObs, numPeopleInPark, probsObsGivenHypothesis);
 
 getPosterior = @(priorGuilty, numObs, numPeopleInPark) ...
-    getJoint(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) ./ ... % numerator of Bayes rule
-    (getJoint(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) + getJoint(1 - priorGuilty, numObs, numPeopleInPark, probObsGivenInnocent)); % denominator
+    getNumerator(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) ./ ... % numerator of Bayes rule
+    (getNumerator(priorGuilty, numObs, numPeopleInPark, probObsGivenGuilty) + getNumerator(1 - priorGuilty, numObs, numPeopleInPark, probObsGivenInnocent)); % denominator
 
 getMarginal = @(priorGuilty, numObs, avgPeopleInPark) ...
     sum(getPosterior(priorGuilty, numObs, rangePeopleInPark) .* ...

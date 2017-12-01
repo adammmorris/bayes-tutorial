@@ -13,14 +13,14 @@ probBeepGivenLie = .7; % false negative rate is 10%
 % Note that "binopdf(X, N, P)" gives you the probability of observing X
 %   beeps out of N, where P is the probability of a beep. (It's the probability density function of a
 %   binomial distribution.) This is our likelihood function.
-getJoint = @(prior, testResults, probBeepGivenHypothesis) ...
+getNumerator = @(prior, testResults, probBeepGivenHypothesis) ...
     prior * binopdf(sum(testResults), length(testResults), probBeepGivenHypothesis);
 
 % Returns prob(guilty | beeps) - i.e. the posterior probability that the
 % person is guilty.
 getPosterior = @(priorGuilty, testResults) ...
-    getJoint(priorGuilty, testResults, probBeepGivenLie) / ... % numerator of Bayes rule
-    (getJoint(priorGuilty, testResults, probBeepGivenLie) + getJoint(1 - priorGuilty, testResults, probBeepGivenTrue)); % denominator
+    getNumerator(priorGuilty, testResults, probBeepGivenLie) / ... % numerator of Bayes rule
+    (getNumerator(priorGuilty, testResults, probBeepGivenLie) + getNumerator(1 - priorGuilty, testResults, probBeepGivenTrue)); % denominator
 
 %% Part A
 
@@ -61,8 +61,8 @@ probBeepGivenLie = .99;
 
 % Recompute posterior function
 getPosterior = @(priorGuilty, testResults) ...
-    getJoint(priorGuilty, testResults, probBeepGivenLie) / ... % numerator of Bayes rule
-    (getJoint(priorGuilty, testResults, probBeepGivenLie) + getJoint(1 - priorGuilty, testResults, probBeepGivenTrue)); % denominator
+    getNumerator(priorGuilty, testResults, probBeepGivenLie) / ... % numerator of Bayes rule
+    (getNumerator(priorGuilty, testResults, probBeepGivenLie) + getNumerator(1 - priorGuilty, testResults, probBeepGivenTrue)); % denominator
 
 % Redo Part B
 posteriors = zeros(numTests, 2);
