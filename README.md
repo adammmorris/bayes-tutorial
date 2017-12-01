@@ -6,6 +6,6 @@ I have written solution code for all mysteries, but it is highly recommended tha
 
 Adam Morris
 
-theadammorris.com
+http://theadammorris.com
 
 adam.mtc.morris@gmail.com
