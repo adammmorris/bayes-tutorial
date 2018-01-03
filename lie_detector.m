@@ -4,7 +4,7 @@
 
 % Lie detector features
 probBeepGivenTrue = .2; % false positive rate is 20%
-probBeepGivenLie = .7; % false negative rate is 10%
+probBeepGivenLie = .7; % false negative rate is 30%
 
 % Returns joint prob(hypothesis, beeps) - i.e. the numerator of Bayes rule.
 % To compute this, we need to know (a) the prior of the hypothesis under
